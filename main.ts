@@ -10,6 +10,17 @@ const LABEL =
   "WARNING: Time travel may cause you to meet yourself. " +
   "Do not lend yourself money. You will not pay it back.";
 
+const MAX_LABEL_LENGTH = 120;
+
+// The gate allows at most 120 characters; refuse to emit a label that
+// would be scored invalid instead of writing it silently.
+if ([...LABEL].length > MAX_LABEL_LENGTH) {
+  console.error(
+    `error: label is ${[...LABEL].length} characters, exceeding the 120-character gate`,
+  );
+  process.exit(1);
+}
+
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 const outputFile = join(outputDir, "entry.txt");
 
